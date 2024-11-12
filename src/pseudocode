@@ -1,0 +1,57 @@
+
+// get file
+// let hackFile
+// for i in file length
+//    line = trim(line)
+//    if line === ''
+//        continue
+//    hackFile.append(transpile(line))
+
+// transpile (file line)
+//    let parsed
+//    let ins = c
+//    if (line = a ins) {
+//      ins = a
+//    }
+//    parsed = parser[ins](line)
+//    translated = translator[ins](parsed)
+//    return translated
+//
+// trim(line)
+//    find(//)
+//    trim white line
+//    return line.slice(0, indexComment)
+//
+// parsing
+//
+// parser.a(line)
+//    let parsed = 0 + line.slice(1).toBinary()
+//    return {address: parsed}
+// parser.c(line)
+//    ... parse
+//    return {
+//      comp: parsed.comp,
+//      dest:parsed.dest,
+//      jmp:parsed.jmp
+//    }
+//
+// trim comment
+//
+//
+// translate.a({address})
+// translate.c({comp, dest, jmp})
+//
+//
+// parsed.a to bin
+// 0 + bin
+//
+// parsed.c
+// comp to table
+// dest to table
+// jmp to table
+// 111 + comp + dest + jmp
+//
+// return translated
+//
+//
+//
