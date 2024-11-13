@@ -1,41 +1,29 @@
 import { argv } from "process";
-import path from "path";
-import { fileURLToPath } from "url";
 import fs from "node:fs";
 import readline from "readline";
 import events from "events";
-import assembly from "./src/assembly.js";
-import trim from "./src/trim.js";
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+import { firstPass, secondPass } from "./src/assembly";
+import { fileResolver } from "./src/IOFileResolver";
 
 async function main(file, out) {
-  const outStream = fs.createWriteStream(path.resolve(__dirname, out), {
-    flags: "a",
-  });
-  const firstPass = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, file)),
+  let [input, output] = fileResolver(file, out);
+  const outStream = fs.createWriteStream(output);
+  const firstRL = readline.createInterface({
+    input: fs.createReadStream(input),
     crlfDelay: Infinity,
   });
 
-  firstPass.on("line", (line) => {
-    let instruction = trim.comment(line);
-    if (instruction === "") return;
-    assembly(instruction, true);
+  firstRL.on("line", (line) => {
+    firstPass(line);
   });
-  await events.once(firstPass, "close");
-  const secondPass = readline.createInterface({
-    input: fs.createReadStream(path.resolve(__dirname, file)),
+  await events.once(firstRL, "close");
+  const secondRL = readline.createInterface({
+    input: fs.createReadStream(input),
     crlfDelay: Infinity,
   });
 
-  secondPass.on("line", (line) => {
-    let instruction = trim.label(line);
-    if (instruction === "") {
-      return;
-    }
-    outStream.write(assembly(instruction, false) + "\n");
+  secondRL.on("line", (line) => {
+    outStream.write(secondPass(line));
   });
 }
 

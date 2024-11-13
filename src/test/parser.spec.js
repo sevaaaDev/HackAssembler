@@ -1,5 +1,4 @@
 import parser from "../parser";
-import symbolTable from "../symbolTable";
 describe("parser no symbol", () => {
   it("parse A instruction", () => {
     let { address } = parser.a("@245");
