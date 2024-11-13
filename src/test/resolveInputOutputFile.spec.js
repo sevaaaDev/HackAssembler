@@ -19,8 +19,13 @@ describe("I/O file resolver", () => {
     expect(output).toBe("/test/Custom.hack");
   });
   it("output file with correct path when given relative path", () => {
-    let [input, output] = fileResolver("../Tetris.asm", "../Custom.hack");
+    let [input, output] = fileResolver("../Tetris.asm");
     expect(input).toBe("/Tetris.asm");
-    expect(output).toBe("/Custom.hack");
+    expect(output).toBe("/Tetris.hack");
+  });
+  it("output file with correct path when given relative path", () => {
+    let [input, output] = fileResolver("../Tetris.asm", "../Tetris.hack");
+    expect(input).toBe("/Tetris.asm");
+    expect(output).toBe("/Tetris.hack");
   });
 });

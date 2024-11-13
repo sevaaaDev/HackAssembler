@@ -5,7 +5,10 @@ const __dirname = path.dirname(__filename);
 
 export function fileResolver(input, output) {
   if (output === undefined) {
-    output = path.basename(input, path.extname(input)) + ".hack";
+    output = input.replace(
+      path.basename(input),
+      path.basename(input, path.extname(input)) + ".hack",
+    );
   }
   input = path.resolve(__dirname, input);
   output = path.resolve(__dirname, output);
